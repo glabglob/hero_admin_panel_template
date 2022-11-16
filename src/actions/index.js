@@ -1,4 +1,4 @@
-//HEGOES -------------------------------------------------------
+//HEROES -------------------------------------------------------
 export const heroesFetching = () => {
     return {
         type: 'HEROES_FETCHING'
