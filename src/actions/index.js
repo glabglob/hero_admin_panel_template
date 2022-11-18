@@ -1,3 +1,6 @@
+import { createAction } from "@reduxjs/toolkit";
+
+
 //HEROES -------------------------------------------------------
 export const fetchHeroes = (request) => (dispatch) => {
     dispatch(heroesFetching());
@@ -9,39 +12,55 @@ export const fetchHeroes = (request) => (dispatch) => {
         .catch(() => dispatch(heroesFetchingError()))
 };
 
+export const heroesFetching = createAction('HEROES_FETCHING');
 
-export const heroesFetching = () => {
-    return {
-        type: 'HEROES_FETCHING'
-    }
-}
+//без использования Redux Toolkit
+// export const heroesFetching = () => {
+//     return {
+//         type: 'HEROES_FETCHING'
+//     }
+// }
 
-export const heroesFetched = (heroes) => {
-    return {
-        type: 'HEROES_FETCHED',
-        payload: heroes
-    }
-}
 
-export const heroesFetchingError = () => {
-    return {
-        type: 'HEROES_FETCHING_ERROR'
-    }
-}
+// payload добавляется автоматически
+export const heroesFetched = createAction('HEROES_FETCHED');
 
-export const heroDeletedById = (id) => {
-    return {
-        type: 'HERO_DELETED',
-        payload: id
-    }
-}
+//без использования Redux Toolkit
+// export const heroesFetched = (heroes) => {
+//     return {
+//         type: 'HEROES_FETCHED',
+//         payload: heroes
+//     }
+// }
 
-export const heroCreateByForm = (hero) => {
-    return {
-        type: 'HERO_CREATED',
-        payload: hero
-    }
-}
+export const heroesFetchingError = createAction('HEROES_FETCHING_ERROR');
+
+//без использования Redux Toolkit
+// export const heroesFetchingError = () => {
+//     return {
+//         type: 'HEROES_FETCHING_ERROR'
+//     }
+// }
+
+export const heroDeletedById = createAction('HERO_DELETED');
+
+//без использования Redux Toolkit
+// export const heroDeletedById = (id) => {
+//     return {
+//         type: 'HERO_DELETED',
+//         payload: id
+//     }
+// }
+
+export const heroCreateByForm = createAction('HERO_CREATED');
+
+//без использования Redux Toolkit
+// export const heroCreateByForm = (hero) => {
+//     return {
+//         type: 'HERO_CREATED',
+//         payload: hero
+//     }
+// }
 
 //FILTERS -------------------------------------------------------
 export const fetchFilters = (request) => (dispatch) => {
@@ -54,38 +73,41 @@ export const fetchFilters = (request) => (dispatch) => {
         });
 };
 
+export const filtersFetching = createAction('FILTERS_FETCHING');
 
-export const filtersFetching = () => {
-    return {
-        type: 'FILTERS_FETCHING'
-    }
-}
-
-export const filtersFetched = (filters) => {
-    return {
-        type: 'FILTERS_FETCHED',
-        payload: filters
-    }
-}
-
-export const filtersFetchingError = () => {
-    return {
-        type: 'FILTERS_FETCHING_ERROR'
-    }
-}
-
-export const activeFilterChanged = (filter) => {
-    return {
-        type: 'ACTIVE_FILTER_CHANGED',
-        payload: filter
-    }
-}
-
-// export const activeFilterChanged = (filter) => (dispatch) => {
-//     setTimeout(() => {
-//         dispatch({
-//             type: 'ACTIVE_FILTER_CHANGED',
-//             payload: filter
-//         })
-//     }, 1000);
+//без использования Redux Toolkit
+// export const filtersFetching = () => {
+//     return {
+//         type: 'FILTERS_FETCHING'
+//     }
 // }
+
+export const filtersFetched = createAction('FILTERS_FETCHED');
+
+//без использования Redux Toolkit
+// export const filtersFetched = (filters) => {
+//     return {
+//         type: 'FILTERS_FETCHED',
+//         payload: filters
+//     }
+// }
+
+export const filtersFetchingError = createAction('FILTERS_FETCHING_ERROR');
+
+//без использования Redux Toolkit
+// export const filtersFetchingError = () => {
+//     return {
+//         type: 'FILTERS_FETCHING_ERROR'
+//     }
+// }
+
+export const activeFilterChanged = createAction('ACTIVE_FILTER_CHANGED');
+
+//без использования Redux Toolkit
+// export const activeFilterChanged = (filter) => {
+//     return {
+//         type: 'ACTIVE_FILTER_CHANGED',
+//         payload: filter
+//     }
+// }
+
