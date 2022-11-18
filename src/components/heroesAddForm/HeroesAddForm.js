@@ -1,7 +1,8 @@
 import { useHttp } from '../../hooks/http.hook';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { heroCreateByForm } from '../../actions/index';
+// import { heroCreateByForm } from '../../actions/index';
+import { heroCreateByForm } from '../heroesList/heroesSlice';
 import { v4 as uuidv4 } from 'uuid';
 // Задача для этого компонента: (3)
 // Реализовать создание нового героя с введенными данными. Он должен попадать 
