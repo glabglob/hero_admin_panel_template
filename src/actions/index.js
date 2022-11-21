@@ -1,16 +1,19 @@
 // import { createAction } from "@reduxjs/toolkit";
-import { heroesFetching, heroesFetched, heroesFetchingError } from '../components/heroesList/heroesSlice';
-import {filtersFetching, filtersFetched, filtersFetchingError} from '../components/heroesFilters/filterSlice';
+
+// и теперь нам не нужна ф-я  по запросу героев 8 - 16 строка
+// import { heroesFetching, heroesFetched, heroesFetchingError } from '../components/heroesList/heroesSlice';
+
+// import { filtersFetching, filtersFetched, filtersFetchingError } from '../components/heroesFilters/filterSlice';
 //HEROES -------------------------------------------------------
-export const fetchHeroes = (request) => (dispatch) => {
-    dispatch(heroesFetching());
-    request("http://localhost:3001/heroes")
-        .then((data) => {
-            dispatch(heroesFetched(data));
-            console.log(data);
-        })
-        .catch(() => dispatch(heroesFetchingError()))
-};
+// export const fetchHeroes = (request) => (dispatch) => {
+//     dispatch(heroesFetching());
+//     request("http://localhost:3001/heroes")
+//         .then((data) => {
+//             dispatch(heroesFetched(data));
+//             console.log(data);
+//         })
+//         .catch(() => dispatch(heroesFetchingError()))
+// };
 
 // так как сделали heroesSlice теперь это нам не нужно -------------------------------------------------------
 // export const heroesFetching = createAction('HEROES_FETCHING');
@@ -68,15 +71,15 @@ export const fetchHeroes = (request) => (dispatch) => {
 // }
 
 //FILTERS -------------------------------------------------------
-export const fetchFilters = (request) => (dispatch) => {
-    dispatch(filtersFetching());
-    request("http://localhost:3001/filters")
-        .then((result) => {
-            dispatch(filtersFetched(result))
-        }).catch(() => {
-            dispatch(filtersFetchingError())
-        });
-};
+// export const fetchFilters = (request) => (dispatch) => {
+//     dispatch(filtersFetching());
+//     request("http://localhost:3001/filters")
+//         .then((result) => {
+//             dispatch(filtersFetched(result))
+//         }).catch(() => {
+//             dispatch(filtersFetchingError())
+//         });
+// };
 
 // так как сделали filterSlice теперь это нам не нужно -------------------------------------------------------
 // export const filtersFetching = createAction('FILTERS_FETCHING');
