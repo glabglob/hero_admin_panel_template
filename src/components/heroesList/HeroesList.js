@@ -1,81 +1,68 @@
-import { useHttp } from '../../hooks/http.hook';
+import {useHttp} from '../../hooks/http.hook';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSelector } from '@reduxjs/toolkit'
+import { CSSTransition, TransitionGroup} from 'react-transition-group';
 
-// import { fetchHeroes, heroDeletedById } from '../../actions';
-
-// import { fetchHeroes } from '../../actions';
-// этот случай когда мы уже сделали экшены в слайсе
-import { heroDeletedById, fetchHeroes } from './heroesSlice'
+import { heroDeleted, fetchHeroes, filteredHeroesSelector } from './heroesSlice';
 
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
-// Задача для этого компонента:
-// (1) При клике на "крестик" идет удаление персонажа из общего состояния *done*
-// Усложненная задача:
-// (2) Удаление идет и с json файла при помощи метода DELETE *done*
+import './heroesList.scss';
 
 const HeroesList = () => {
-
-    const filteredHeroesSelector = createSelector(
-        (state) => state.filtersReducer.activeFilter,
-        (state) => state.heroesReducer.heroes,
-        (filter, heroes) => {
-            if (filter === 'all') {
-                return heroes;
-            } else {
-                return heroes.filter(item => item.element === filter);
-            }
-        }
-    );
-
-    const filteredeHeroes = useSelector(filteredHeroesSelector);
-    const heroesLoadingStatus = useSelector(state => state.heroesLoadingStatus);
+    const filteredHeroes = useSelector(filteredHeroesSelector);
+    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
-    const { request } = useHttp();
+    const {request} = useHttp();
 
     useEffect(() => {
         dispatch(fetchHeroes());
         // eslint-disable-next-line
     }, []);
 
-    //(1) сделано в index.js reducers
-    //(2)
-    const onDeleteHero = useCallback((id) => {
-        request(`http://localhost:3001/heroes/${id}`, "DELETE") // (2) используем метод DELETE для удаления из heroes.json
-            .then((data) => {
-                dispatch(heroDeletedById(id))
-                console.log(`deleted ${data}`);
-            }).catch((err) => {
-                console.log(err);
-            });
-        // eslint-disable-next-line
-    }, [request])
-
+    const onDelete = useCallback((id) => {
+        request(`http://localhost:3001/heroes/${id}`, "DELETE")
+            .then(data => console.log(data, 'Deleted'))
+            .then(dispatch(heroDeleted(id)))
+            .catch(err => console.log(err));
+        // eslint-disable-next-line  
+    }, [request]);
 
     if (heroesLoadingStatus === "loading") {
-        return <Spinner />;
+        return <Spinner/>;
     } else if (heroesLoadingStatus === "error") {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
     const renderHeroesList = (arr) => {
         if (arr.length === 0) {
-            return <h5 className="text-center mt-5">Героев пока нет</h5>
+            return (
+                <CSSTransition
+                    timeout={0}
+                    classNames="hero">
+                    <h5 className="text-center mt-5">Героев пока нет</h5>
+                </CSSTransition>
+            )
         }
 
-        return arr.map(({ id, ...props }) => {
-            return <HeroesListItem key={id} {...props} onDeleteHero={() => onDeleteHero(id)} />
+        return arr.map(({id, ...props}) => {
+            return (
+                <CSSTransition 
+                    key={id}
+                    timeout={500}
+                    classNames="hero">
+                    <HeroesListItem  {...props} onDelete={() => onDelete(id)}/>
+                </CSSTransition>
+            )
         })
     }
 
-    const elements = renderHeroesList(filteredeHeroes);
+    const elements = renderHeroesList(filteredHeroes);
     return (
-        <ul>
+        <TransitionGroup component="ul">
             {elements}
-        </ul>
+        </TransitionGroup>
     )
 }
 
