@@ -50,6 +50,7 @@ export const filteredHeroesSelector = createSelector(
     (state) => state.filters.activeFilter,
     selectAll,
     (filter, heroes) => {
+        console.log(heroes);
         if (filter === 'all') {
             return heroes;
         } else {
